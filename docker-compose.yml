@@ -46,3 +46,11 @@ services:
       - "MYSQL_DATABASE=smm"
     ports:
       - "33061:3306"
+
+  node:
+    build:
+      context: ./
+      dockerfile: docker/node.docker
+    volumes:
+      - ./:/var/www
+    tty: true
