@@ -50,6 +50,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @can('admin-panel', Auth::user())
+                                        <a class="dropdown-item" href="{{ route('admin.home') }}">Admin</a>
+                                    @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -68,7 +71,11 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @include('layouts.partials.flash')
+
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>
