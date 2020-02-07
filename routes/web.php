@@ -29,3 +29,19 @@ Route::group([
     Route::resource('users', 'UsersController');
     Route::post('/users/{user}/switch', 'UsersController@switch')->name('users.switch');
 });
+
+Route::group([
+    'prefix' => 'projects',
+    'as' => 'projects.',
+    'middleware' => 'auth'
+], function() {
+
+    Route::get('/','ProjectController@index')->name('index');
+    Route::get('/create','ProjectController@create')->name('create');
+    Route::post('/store','ProjectController@store')->name('store');
+    Route::get('/{project}/edit','ProjectController@edit')->name('edit');
+    Route::put('/{project}/update','ProjectController@update')->name('update');
+    Route::get('/{project}/show','ProjectController@show')->name('show');
+    Route::delete('/{project}/destroy','ProjectController@destroy')->name('destroy');
+    Route::get('/{project}/report', 'ProjectController@report')->name('report');
+});
