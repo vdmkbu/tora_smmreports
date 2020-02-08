@@ -39,6 +39,25 @@
     </style>
 </head>
 <body>
+Просмотры: <strong>{{ $views }}</strong> |
+Лайки: <strong>{{ $likes }}</strong> |
+Репосты: <strong>{{ $reposts }}</strong> |
+Комментарии: <strong>{{$comments}}</strong><br>
+
+
+@foreach($items as $item)
+
+    <div class='row'>
+        <h2>{{ $item['date'] }}</h2>
+        <p>{{ $item['text'] }}</p>
+        @if(count($item['attach']))
+            @include('projects.report.attach', $item['attach'])
+        @endif
+
+
+    </div>
+
+@endforeach
 
 </body>
 </html>
