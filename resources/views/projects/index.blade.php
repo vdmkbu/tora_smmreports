@@ -12,6 +12,7 @@
                         <td>ID</td>
                         <td>Название</td>
                         <td>URL</td>
+                        <td>Пользователь</td>
                         <td>Действия</td>
                     </tr>
                     </thead>
@@ -22,6 +23,7 @@
                             <td>{{$project->id}}</td>
                             <td>{{$project->name}}</td>
                             <td>{{$project->url}}</td>
+                            <td>{{$project->user->email}}</td>
                             <td>
                                 <a href="{{route('projects.show',$project->id)}}">
                                     Сформировать отчёт

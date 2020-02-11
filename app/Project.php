@@ -14,4 +14,9 @@ class Project extends Model
     {
         return str_replace("/","",parse_url($this->url, PHP_URL_PATH));
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
