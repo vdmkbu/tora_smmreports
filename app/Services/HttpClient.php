@@ -7,10 +7,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 
-class VkApi
+class HttpClient
 {
     const API_URL = "https://api.vk.com/method/";
-    const API_VERSION = '5.69';
+    const API_VERSION = '5.101';
     const API_TIMEOUT = 30.0;
 
     protected $http;

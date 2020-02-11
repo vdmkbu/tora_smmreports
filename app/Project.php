@@ -9,4 +9,9 @@ class Project extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'url', 'user_id'];
+
+    public function getGroupKeyword()
+    {
+        return str_replace("/","",parse_url($this->url, PHP_URL_PATH));
+    }
 }

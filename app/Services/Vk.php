@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Vk
 {
@@ -11,12 +12,15 @@ class Vk
         return $response['response']['count'];
     }
 
-    public function getItems($date_from, $date_to, $response)
+    public function getItems(Request $request, $response)
     {
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        $date_from = (int)date_format(date_create($from),'U');
+        $date_to = (int)date_format(date_create($to),'U');
 
         $arrayOfSlice = [];
-        $date_to = (int)$date_to;
-        $date_from = (int)$date_from;
 
         foreach($response['response']['items'] as $_id=>$object)
         {
