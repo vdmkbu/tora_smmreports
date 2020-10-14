@@ -4,20 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Projects\CreateRequest;
 use App\Project;
-use App\Services\Vk;
-use App\Services\HttpClient;
+use App\Services\VkReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
-    protected $vk;
-    protected $http;
+    protected $report_service;
 
-    public function __construct(Vk $vk, HttpClient $http)
+    public function __construct(VkReportService $report_service)
     {
-        $this->vk = $vk;
-        $this->http = $http;
+        $this->report_service = $report_service;
     }
 
     public function index()
@@ -111,35 +108,10 @@ class ProjectController extends Controller
             return redirect(route('projects.show', $project->id))->with('error', 'Empty parameters');
 
 
-        $group_keyword = $project->getGroupKeyword();
-
-        $params = [
-            'domain' => $group_keyword,
-            'count' => 100,
-            'filter' => 'owner',
-            'offset' => 0,
-        ];
-
-        $response = $this->http->request('wall.get', $params, config('vk.app_key'));
-
-
-        $items = $this->vk->getItems($request, $response);
-        $views = $this->vk->getSumViews($items);
-        $likes = $this->vk->getSumLikes($items);
-        $reposts = $this->vk->getSumReposts($items);
-        $comments = $this->vk->getSumComments($items);
-
-        $data = [
-            'views' => $views,
-            'likes' => $likes,
-            'reposts' => $reposts,
-            'comments' => $comments,
-            'items' => $items
-        ];
-
+        $data = $this->report_service->report($project, $request);
 
         $pdf = app('PDF');
-        $pdf_file_name = "report-{$group_keyword}-".date('Y-m-d-H:i:s');
+        $pdf_file_name = "report-" . $project->getGroupKeyword() . "-".date('Y-m-d-H:i:s');
 
         $pdf = $pdf::loadView('projects.report.pdf', $data);
         return $pdf->download("{$pdf_file_name}.pdf");
