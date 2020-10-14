@@ -13,7 +13,7 @@ composer-install:
 	docker-compose exec php-cli composer install
 
 fixtures:
-	docker-compose exec php-cli php artisan:refresh --seed
+	docker-compose exec php-cli php artisan migrate:refresh --seed
 
 
 perm:
