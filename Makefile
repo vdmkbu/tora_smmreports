@@ -7,10 +7,14 @@ docker-down:
 docker-build:
 	docker-compose up --build -d
 
-init: composer-install
+init: composer-install fixtures
 
 composer-install:
 	docker-compose exec php-cli composer install
+
+fixtures:
+	docker-compose exec php-cli php artisan:refresh --seed
+
 
 perm:
 	sudo chgrp -R www-data storage bootstrap/cache
